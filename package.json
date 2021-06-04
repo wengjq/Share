@@ -1,0 +1,60 @@
+{
+  "name": "xxx-monorepo",
+  "private": true,
+  "description": "xxx",
+  "scripts": {
+    "bootstrap": "yarn --ignore-engines",
+    "ci": "yarn install --pure-lockfile --prefer-offline --ignore-engines",
+    "dev:lib": "yarn workspace @fk/fa-component-cus dev",
+    "dev:designer": "yarn workspace designer serve",
+    "dev:website": "yarn workspace website serve",
+    "dev:docs": "yarn workspace docs dev",
+    "serve:designer": "npm-run-all --parallel dev:lib dev:designer",
+    "serve:website": "npm-run-all --parallel dev:lib dev:website",
+    "build:lib": "yarn workspace @fk/fa-component-cus build",
+    "build:designer": "yarn workspace designer build",
+    "build:website": "yarn workspace website build",
+    "build:docs": "yarn workspace docs build-site",
+    "build": "yarn build:lib && yarn build:designer && yarn build:website && yarn build:docs",
+    "lint": "eslint packages/fa-component-cus/packages/** packages/*/src/** --no-error-on-unmatched-pattern",
+    "lint-fix": "eslint packages/fa-component-cus/packages/** packages/*/src/** --no-error-on-unmatched-pattern --fix",
+    "patch": "npx patch-package @vant/cli",
+    "postinstall": "patch-package"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "lint-staged": {
+    "*.{js,vue}": [
+      "eslint --fix"
+    ]
+  },
+  "engines": {
+    "node": ">=10.14.0"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "@babel/plugin-transform-object-assign": "^7.12.13",
+    "@babel/preset-typescript": "^7.13.0",
+    "@commitlint/cli": "^12.0.0",
+    "@commitlint/config-conventional": "^12.0.0",
+    "@fk/vue-cli-plugin-cicd": "^1.1.3",
+    "@vue/eslint-config-prettier": "^6.0.0",
+    "babel-eslint": "^10.1.0",
+    "commitlint": "^11.0.0",
+    "eslint": "^7.20.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-vue": "^7.6.0",
+    "husky": "^4.0.0",
+    "lint-staged": "^10.5.4",
+    "npm-run-all": "^4.1.5"
+  },
+  "dependencies": {
+    "patch-package": "^6.2.2"
+  }
+}
